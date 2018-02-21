@@ -67,15 +67,6 @@ namespace Kontur.Echelon
             return TakeAsync(count, taskTypes, false, timeout, includeMeta);
         }
 
-        public Task<EchelonTakeResult> TakeAsync(int count, IList<string> taskTypes, bool onlyFromCurrentTopology, TimeSpan timeout, bool includeMeta = false)
-        {
-            var request = new TakeTasksRequest(count, taskTypes, onlyFromCurrentTopology ? topologyName : null, includeMeta);
-            if (!RequestsValidator.ValidateTakeTasksRequest(request, Log) ||
-                !ArgumentsValidator.ValidateTimeout(timeout, Log))
-                return Task.FromResult(new EchelonTakeResult(EchelonTakeStatus.IncorrectArguments, null));
-            var operation = new TakeOperation(clusterClientsResolver, RequestFactory, Log, topologyName);
-
-            return operation.ExecuteAsync(request, timeout);
-        }
+      
     }
 }
