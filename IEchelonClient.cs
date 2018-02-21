@@ -10,6 +10,5 @@ namespace Kontur.Echelon
 
         Task<EchelonTakeResult> TakeAsync(int count, IList<string> taskTypes, TimeSpan timeout, bool includeMeta = false);
 
-        Task<EchelonTakeResult> TakeAsync(int count, IList<string> taskTypes, bool onlyFromCurrentTopology, TimeSpan timeout, bool includeMeta = false);
     }
 }
