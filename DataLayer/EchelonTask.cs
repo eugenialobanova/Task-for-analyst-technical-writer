@@ -11,17 +11,7 @@ namespace Kontur.Echelon
     [JsonObject]
     public class EchelonTask : IBinarySerializable, IEnumerable<KeyValuePair<string, string>>
     {
-        public static EchelonTask DeserializeBinary(IBinaryDeserializer deserializer)
-        {
-            return new EchelonTask(
-                deserializer.ReadGuid(),
-                deserializer.ReadString(),
-                deserializer.ReadDictionary(
-                    ds => ds.ReadString(),
-                    ds => ds.ReadString()
-                    )
-                );
-        }
+       
 
         public EchelonTask(string type, IDictionary<string, string> content)
             : this(Guid.NewGuid(), type, content)
@@ -63,26 +53,6 @@ namespace Kontur.Echelon
         public void Add(string key, string value)
         {
             Content.Add(key, value);
-        }
-
-        public void SerializeBinary(IBinarySerializer serializer)
-        {
-            serializer
-                .Write(Id)
-                .Write(Type)
-                .WriteDictionary(
-                    Content,
-                    (key, bs) => bs.Write(key),
-                    (value, bs) => bs.Write(value)
-                );
-        }
-
-        public int GetEstimatedSerializedSize()
-        {
-            return SerializedSizes.Guid
-                   + SerializedSizes.String(Type)
-                   + SerializedSizes.Int32
-                   + Content.Sum(pair => SerializedSizes.Int32 + (pair.Key.Length + pair.Value.Length)*2);
         }
 
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
