@@ -1,4 +1,4 @@
-using Kontur.Core.Binary.Serialization;
+using Kontur.Core.Binary.Serialization
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -57,36 +57,6 @@ namespace Kontur.Echelon
                 return hashCode;
             }
         }
-        #endregion
-
-        #region Serialization members
-
-        public const int SerializedSize = SerializedSizes.Byte*2 + SerializedSizes.Int32*2;
-
-        public void SerializeBinary(IBinarySerializer serializer)
-        {
-            serializer
-                .Write((byte) SerializationVersion.Initial)
-                .Write((byte) RetryStrategy)
-                .Write(BaseDelaySeconds)
-                .Write(AttemptsCount);
-        }
-
-        public static EchelonRetry DeserializeBinary(IBinaryDeserializer deserializer)
-        {
-            var version = (SerializationVersion) deserializer.ReadByte();
-
-            return new EchelonRetry(
-                (EchelonRetryStrategy)deserializer.ReadByte(),
-                deserializer.ReadInt32(),
-                deserializer.ReadInt32());
-        }
-
-        private enum SerializationVersion : byte
-        {
-            Initial = 0
-        }
-
         #endregion
     }
 }
