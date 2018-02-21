@@ -30,33 +30,6 @@ namespace Kontur.Echelon
         public static EchelonRetry Exponential(int baseDelaySeconds = 600, int attemptsCount = 5)
             => new EchelonRetry(EchelonRetryStrategy.Exponential, baseDelaySeconds, attemptsCount);
 
-        #region EqualityMembers
-        public bool Equals(EchelonRetry other)
-        {
-            return AttemptsCount == other.AttemptsCount
-                   && RetryStrategy == other.RetryStrategy
-                   && BaseDelaySeconds == other.BaseDelaySeconds;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj))
-                return false;
-            if (obj.GetType() != this.GetType())
-                return false;
-            return Equals((EchelonRetry)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = AttemptsCount;
-                hashCode = (hashCode * 397) ^ (int)RetryStrategy;
-                hashCode = (hashCode * 397) ^ BaseDelaySeconds;
-                return hashCode;
-            }
-        }
-        #endregion
+      
     }
 }
