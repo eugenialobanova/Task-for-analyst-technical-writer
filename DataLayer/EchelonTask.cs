@@ -70,37 +70,6 @@ namespace Kontur.Echelon
             return GetEnumerator();
         }
 
-        #region Equality members
-
-        protected bool Equals(EchelonTask other)
-        {
-            return Id.Equals(other.Id)
-                   && string.Equals(Type, other.Type, StringComparison.Ordinal)
-                   && Content.ElementwiseEquals(other.Content);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj))
-                return false;
-            if (ReferenceEquals(this, obj))
-                return true;
-            if (obj.GetType() != GetType())
-                return false;
-            return Equals((EchelonTask) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = Id.GetHashCode();
-                hashCode = (hashCode*397) ^ Type.GetHashCode();
-                hashCode = (hashCode*397) ^ Content.ElementwiseHash();
-                return hashCode;
-            }
-        }
-
-        #endregion
+      
     }
 }
